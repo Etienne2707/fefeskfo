@@ -14,7 +14,7 @@ OBJ = $(SRC:$(SRC_DIR)/%.c=$(BIN_DIR)%.o)
 
 INCLUDES = ./includes
 
-CFLAGS = -I$(INCLUDES) -Wall -Werror -Wextra -g3 -fsanitize=leak
+CFLAGS = -I$(INCLUDES) -Wall -Werror -Wextra -g3 #-fsanitize=leak
 
 all :	$(NAME)
 

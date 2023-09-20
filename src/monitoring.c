@@ -48,7 +48,7 @@ int die_monitor(t_philo *philo, t_info *info)
             full_eat(philo,info);
             i++;
         }
-        ft_usleep(1);
+        usleep(500);
     }
    
     return (1);

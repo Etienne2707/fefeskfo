@@ -5,7 +5,7 @@ int	think(t_philo *philo, t_info *info)
 	if (philo->nb_eat == 0 || die_checker(philo) == 0)
 		return (0);
 	print(philo, "Is thinking");
-	ft_usleep(1);
+	usleep(500);
 }
 
 int	sleepfort(t_philo *philo)
@@ -25,10 +25,20 @@ int	take_fork(t_philo *philo)
 {
 	if (philo->nb_eat == 0 || die_checker(philo) == 0)
 		return (0);
-	pthread_mutex_lock(&philo->forks_l);
-	print(philo ,"Has taking a fork ");
-	pthread_mutex_lock(philo->forks_r);
-	print(philo ,"Has taking a fork ");
+	if (philo->id % 2)
+	{
+		pthread_mutex_lock(&philo->forks_l);
+		print(philo ,"Has taking a fork ");
+		pthread_mutex_lock(philo->forks_r);
+		print(philo ,"Has taking a fork ");
+	}
+	else
+	{
+		pthread_mutex_lock(philo->forks_r);
+		print(philo ,"Has taking a fork ");
+		pthread_mutex_lock(&philo->forks_l);
+		print(philo ,"Has taking a fork ");
+	}
 }
 
 int	eat(t_philo *philo)
