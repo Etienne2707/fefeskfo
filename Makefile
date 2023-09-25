@@ -14,14 +14,14 @@ OBJ = $(SRC:$(SRC_DIR)/%.c=$(BIN_DIR)%.o)
 
 INCLUDES = ./includes
 
-CFLAGS = -I$(INCLUDES) -Wall -Werror -Wextra -g3 #-fsanitize=leak
+CFLAGS = -I$(INCLUDES)s -Werror -Wall -Wextra -g3 -fsanitize=thread
 
 all :	$(NAME)
 
 bonus :	$(NAME_BONUS)
 
 $(BIN_DIR)%.o : $(SRC_DIR)/%.c
-		@ $(CC) -I$(INCLUDES) -c $< -o $@
+		 @  $(CC) $(CFLAGS) -I$(INCLUDES)  -c $< -o $@
 
 $(NAME) :	$(BIN_DIR) $(OBJ)
 			@ $(CC) $(CFLAGS) $(OBJ) -o $(NAME)

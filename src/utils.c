@@ -1,25 +1,36 @@
-#include "philosophers.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: educlos <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/20 17:49:47 by educlos           #+#    #+#             */
+/*   Updated: 2023/09/25 20:33:53 by educlos          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "philosophers.h"
 
 int	ft_atoi(const char *str)
 {
-	int i;
-	int sign;
-	int result;
-	char *str2;
+	int		i;
+	int		sign;
+	int		result;
+	char	*str2;
 
 	i = 0;
 	sign = 1;
 	result = 0;
 	str2 = (char *)str;
-	while ((str2[i] >= 9 && str2[i] <= 13 )|| str2[i] == 32)
+	while ((str2[i] >= 9 && str2[i] <= 13) || str2[i] == 32)
 		i++;
 	if (str2[i] == '+')
 		i++;
 	else if (str2[i] == '-')
 	{
 		i++;
-		sign = sign * - 1;
+		sign = sign * -1;
 	}
 	while (str2[i] >= '0' && str2[i] <= '9' && str2[i] != '\0')
 	{
@@ -32,12 +43,12 @@ int	ft_atoi(const char *str)
 
 int	print(t_philo *philo, char *str)
 {
-	t_info *info;
+	t_info	*info;
 	size_t	t;
 
 	info = get_info();
 	pthread_mutex_lock(&info->print_lock);
-	if ((die_checker(philo) == 0 && (strcmp("Is died", str) != 0)) 
+	if ((die_checker(philo) == 0 && (strcmp("Is died", str) != 0))
 		|| (philo->nb_eat == 0 && (strcmp("Is eating", str) != 0)))
 	{
 		pthread_mutex_unlock(&info->print_lock);
@@ -46,11 +57,12 @@ int	print(t_philo *philo, char *str)
 	t = get_current_time() - info->time_start;
 	printf("%ld %d %s\n", t, philo->id, str);
 	pthread_mutex_unlock(&info->print_lock);
+	return (1);
 }
 
-int	die_checker(t_philo *philo)
+int	die_checker()
 {
-	t_info *info;
+	t_info	*info;
 
 	info = get_info();
 	pthread_mutex_lock(&info->dead_lock);
@@ -74,8 +86,6 @@ int	ft_usleep(long int time)
 	}
 	return (1);
 }
-
-// Gets the current time in time
 
 long int	get_current_time(void)
 {
